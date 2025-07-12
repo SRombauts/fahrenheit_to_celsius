@@ -40,11 +40,6 @@ fn process_command_line_args(args: Vec<String>) -> bool {
     true
 }
 
-fn fahrenheit_to_celsius(farentheit: f32) -> f32 {
-    let celsius = (farentheit - 32.0) * 5.0 / 9.0;
-    celsius
-}
-
 fn interactive_prompt() -> bool {
     println!("Please enter a temperature in Fahrenheit to convert to Celsius:");
     let mut fahrenheit = String::new();
@@ -68,4 +63,25 @@ fn print_help() -> bool {
     println!("Usage: fahrenheit_to_celsius <temperature_i.0n_fahrenheit>");
     println!("Example: fahrenheit_to_celsius 100.0");
     true
+}
+
+fn fahrenheit_to_celsius(farentheit: f32) -> f32 {
+    let celsius = (farentheit - 32.0) * 5.0 / 9.0;
+    celsius
+}
+
+#[cfg(test)]
+mod tests {
+    // Note this useful idiom: importing names from outer (for mod tests) scope.
+    use super::*;
+
+    #[test]
+    fn test_freezing_temperature() {
+        assert_eq!(fahrenheit_to_celsius(32.0), 0.0);
+    }
+
+    #[test]
+    fn test_boiling_temperature() {
+        assert_eq!(fahrenheit_to_celsius(212.0), 100.0);
+    }
 }
