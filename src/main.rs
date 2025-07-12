@@ -9,19 +9,11 @@ fn main() {
             return;
         }
     } else {
-        println!("No command line arguments provided.");
-        loop {
-            let done = interactive_prompt();
-            if done {
-                break;
-            }
-        }
+        loop_interractive_prompt();
     }
 }
 
 fn process_command_line_args(args: Vec<String>) -> bool {
-    println!("{} command line arguments: process + {:?}", args.len() - 1, &args[1..]);
-
     if args[1] == "--help" || args[1] == "-h" {
         return print_help();
     }
@@ -38,6 +30,15 @@ fn process_command_line_args(args: Vec<String>) -> bool {
     println!("{}", celsius);
 
     true
+}
+
+fn loop_interractive_prompt() {
+    loop {
+        let done = interactive_prompt();
+        if done {
+            break;
+        }
+    }
 }
 
 fn interactive_prompt() -> bool {
