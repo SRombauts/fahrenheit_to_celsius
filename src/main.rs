@@ -82,6 +82,11 @@ mod tests {
     }
 
     #[test]
+    fn test_body_temperature() {
+        assert_eq!(fahrenheit_to_celsius(98.6), 37.0);
+    }
+
+    #[test]
     fn test_boiling_temperature() {
         assert_eq!(fahrenheit_to_celsius(212.0), 100.0);
     }
