@@ -2,11 +2,9 @@ use std::io;
 
 fn main() {
     match std::env::args().nth(1).as_deref() {
-        Some(arg) if arg == "--help" || arg == "-h" => {
-            print_help();
-        }
+        Some("--help") | Some("-h") => print_help(),
         Some(arg) => {
-            if let Err(e) =  process_command_line_arg(arg) {
+            if let Err(e) = process_command_line_arg(arg) {
                 eprintln!("{e}");
                 print_help();
             }
