@@ -22,7 +22,7 @@ fn process_command_line_arg(arg: String) -> Result<(), String> {
         return Err("Help requested. Use --help or -h to see usage.".to_string());
     }
 
-    match arg.parse() {
+    match arg.trim().parse::<f32>() {
         Ok(fahrenheit) => {
             let celsius = fahrenheit_to_celsius(fahrenheit);
             println!("{}", celsius);
@@ -52,7 +52,7 @@ fn interactive_prompt() -> Result<(), String> {
     let mut input = String::new();
     io::stdin().read_line(&mut input).expect("Failed to read line");
 
-    match input.trim().parse() {
+    match input.trim().parse::<f32>() {
         Ok(fahrenheit) => {
             let celsius = fahrenheit_to_celsius(fahrenheit);
             println!("{}", celsius);
