@@ -2,35 +2,26 @@ use std::io;
 
 fn main() {
     match std::env::args().nth(1) {
+        Some(arg) if arg == "--help" || arg == "-h" => {
+            print_help();
+        }
         Some(arg) => {
-            match process_command_line_arg(arg) {
-                Ok(_) => {},
-                Err(e) => {
-                    eprintln!("{}", e);
-                    print_help();
-                }
+            if let Err(e) =  process_command_line_arg(arg) {
+                eprintln!("{}", e);
+                print_help();
             }
         }
-        None => {
-            loop_interactive_prompt();
-        },
+        None => loop_interactive_prompt()
     }
 }
 
 fn process_command_line_arg(arg: String) -> Result<(), String> {
-    if arg == "--help" || arg == "-h" {
-        return Err("Help requested. Use --help or -h to see usage.".to_string());
-    }
-
     match arg.trim().parse::<f32>() {
         Ok(fahrenheit) => {
-            let celsius = fahrenheit_to_celsius(fahrenheit);
-            println!("{}", celsius);
+            println!("{}", fahrenheit_to_celsius(fahrenheit));
             Ok(())
         }
-        Err(_) => {
-            Err(format!("Invalid number provided: {}", arg.trim()))
-        }
+        Err(_) => Err(format!("Invalid argument: {}", arg.trim()))
     }
 }
 
@@ -59,7 +50,7 @@ fn interactive_prompt() -> Result<(), String> {
             Ok(())
         },
         Err(_) => {
-            return Err(format!("Invalid number provided: {}", input.trim()))
+            return Err(format!("Invalid argument: {}", input.trim()))
         }
     }
 }
@@ -79,17 +70,10 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_process_command_line_arg_help() {
-        let result = process_command_line_arg("--help".to_string());
-        assert!(result.is_err());
-        assert_eq!(result.unwrap_err(), "Help requested. Use --help or -h to see usage.");
-    }
-
-    #[test]
     fn test_process_command_line_arg_invalid_number() {
         let result = process_command_line_arg("abc".to_string());
         assert!(result.is_err());
-        assert_eq!(result.unwrap_err(), "Invalid number provided: abc");
+        assert_eq!(result.unwrap_err(), "Invalid argument: abc");
     }
 
     #[test]
