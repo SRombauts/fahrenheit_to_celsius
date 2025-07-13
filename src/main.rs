@@ -21,7 +21,7 @@ fn process_command_line_args(args: Vec<String>) -> bool {
     let fahrenheit: f32 = match args[1].parse() {
         Ok(num) => num,
         Err(_) => {
-            println!("Invalid number provided: {}", args[1]);
+            eprintln!("Invalid number provided: {}", args[1]);
             return false;
         },
     };
@@ -49,7 +49,7 @@ fn interactive_prompt() -> bool {
     let fahrenheit: f32 = match fahrenheit.trim().parse() {
         Ok(num) => num,
         Err(_) => {
-            println!("Invalid number provided: {}", fahrenheit.trim());
+            eprintln!("Invalid number provided: {}", fahrenheit.trim());
             return false;
         },
     };
