@@ -3,33 +3,29 @@ use std::io;
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     if args.len() > 1 {
-        let args_processed = process_command_line_args(args);
-        if !args_processed {
-            print_help();
-            return;
-        }
+        process_command_line_args(args);
     } else {
         loop_interractive_prompt();
     }
 }
 
-fn process_command_line_args(args: Vec<String>) -> bool {
+fn process_command_line_args(args: Vec<String>) {
     if args[1] == "--help" || args[1] == "-h" {
-        return print_help();
+        print_help();
+        return;
     }
 
     let fahrenheit: f32 = match args[1].parse() {
         Ok(num) => num,
         Err(_) => {
             eprintln!("Invalid number provided: {}", args[1]);
-            return false;
+            print_help();
+            return;
         },
     };
 
     let celsius = fahrenheit_to_celsius(fahrenheit);
     println!("{}", celsius);
-
-    true
 }
 
 fn loop_interractive_prompt() {
@@ -60,10 +56,9 @@ fn interactive_prompt() -> bool {
     true
 }
 
-fn print_help() -> bool {
+fn print_help() {
     println!("Usage: fahrenheit_to_celsius <temperature_i.0n_fahrenheit>");
     println!("Example: fahrenheit_to_celsius 100.0");
-    true
 }
 
 fn fahrenheit_to_celsius(fahrenheit: f32) -> f32 {
