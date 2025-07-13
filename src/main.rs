@@ -7,7 +7,7 @@ fn main() {
         }
         Some(arg) => {
             if let Err(e) =  process_command_line_arg(arg) {
-                eprintln!("{}", e);
+                eprintln!("{e}");
                 print_help();
             }
         }
@@ -28,12 +28,8 @@ fn process_command_line_arg(arg: String) -> Result<(), String> {
 fn loop_interactive_prompt() {
     loop {
         match interactive_prompt() {
-            Ok(_) => {
-                break
-            },
-            Err(e) => {
-                eprintln!("{}", e);
-            },
+            Ok(_) => break,
+            Err(e) => eprintln!("{e}")
         }
     }
 }
@@ -45,8 +41,7 @@ fn interactive_prompt() -> Result<(), String> {
 
     match input.trim().parse::<f32>() {
         Ok(fahrenheit) => {
-            let celsius = fahrenheit_to_celsius(fahrenheit);
-            println!("{}", celsius);
+            println!("{}", fahrenheit_to_celsius(fahrenheit));
             Ok(())
         },
         Err(_) => {
