@@ -66,8 +66,7 @@ fn print_help() {
 }
 
 fn fahrenheit_to_celsius(fahrenheit: f32) -> f32 {
-    let celsius = (fahrenheit - 32.0) * 5.0 / 9.0;
-    celsius
+    (fahrenheit - 32.0) * 5.0 / 9.0
 }
 
 #[cfg(test)]
