@@ -1,7 +1,7 @@
 use std::io;
 
 fn main() {
-    match std::env::args().nth(1) {
+    match std::env::args().nth(1).as_deref() {
         Some(arg) if arg == "--help" || arg == "-h" => {
             print_help();
         }
@@ -15,7 +15,7 @@ fn main() {
     }
 }
 
-fn process_command_line_arg(arg: String) -> Result<(), String> {
+fn process_command_line_arg(arg: &str) -> Result<(), String> {
     match arg.trim().parse::<f32>() {
         Ok(fahrenheit) => {
             println!("{}", fahrenheit_to_celsius(fahrenheit));
@@ -66,14 +66,14 @@ mod tests {
 
     #[test]
     fn test_process_command_line_arg_invalid_number() {
-        let result = process_command_line_arg("abc".to_string());
+        let result = process_command_line_arg("abc");
         assert!(result.is_err());
         assert_eq!(result.unwrap_err(), "Invalid argument: abc");
     }
 
     #[test]
     fn test_process_command_line_arg_valid_number() {
-        let result = process_command_line_arg("212.0".to_string());
+        let result = process_command_line_arg("212.0");
         assert!(result.is_ok());
     }
 
