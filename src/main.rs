@@ -1,24 +1,26 @@
 use std::io;
 
 fn main() {
-    let args: Vec<String> = std::env::args().collect();
-    if args.len() > 1 {
-        process_command_line_args(args);
-    } else {
-        loop_interractive_prompt();
+    match std::env::args().nth(1) {
+        Some(arg) => {
+            process_command_line_arg(arg);
+        }
+        None => {
+            loop_interractive_prompt();
+        },
     }
 }
 
-fn process_command_line_args(args: Vec<String>) {
-    if args[1] == "--help" || args[1] == "-h" {
+fn process_command_line_arg(arg: String) {
+    if arg == "--help" || arg == "-h" {
         print_help();
         return;
     }
 
-    let fahrenheit: f32 = match args[1].parse() {
+    let fahrenheit: f32 = match arg.parse() {
         Ok(num) => num,
         Err(_) => {
-            eprintln!("Invalid number provided: {}", args[1]);
+            eprintln!("Invalid number provided: {}", arg);
             print_help();
             return;
         },
