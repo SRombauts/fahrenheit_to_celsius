@@ -6,7 +6,7 @@ fn main() {
             process_command_line_arg(arg);
         }
         None => {
-            loop_interractive_prompt();
+            loop_interactive_prompt();
         },
     }
 }
@@ -30,7 +30,7 @@ fn process_command_line_arg(arg: String) {
     }
 }
 
-fn loop_interractive_prompt() {
+fn loop_interactive_prompt() {
     loop {
         match interactive_prompt() {
             Ok(_) => {},
