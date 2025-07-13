@@ -18,7 +18,7 @@ fn process_command_line_args(args: Vec<String>) -> bool {
         return print_help();
     }
 
-    let farentheit: f32 = match args[1].parse() {
+    let fahrenheit: f32 = match args[1].parse() {
         Ok(num) => num,
         Err(_) => {
             println!("Invalid number provided: {}", args[1]);
@@ -26,7 +26,7 @@ fn process_command_line_args(args: Vec<String>) -> bool {
         },
     };
 
-    let celsius = fahrenheit_to_celsius(farentheit);
+    let celsius = fahrenheit_to_celsius(fahrenheit);
     println!("{}", celsius);
 
     true
@@ -66,8 +66,8 @@ fn print_help() -> bool {
     true
 }
 
-fn fahrenheit_to_celsius(farentheit: f32) -> f32 {
-    let celsius = (farentheit - 32.0) * 5.0 / 9.0;
+fn fahrenheit_to_celsius(fahrenheit: f32) -> f32 {
+    let celsius = (fahrenheit - 32.0) * 5.0 / 9.0;
     celsius
 }
 
