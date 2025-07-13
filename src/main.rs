@@ -34,14 +34,14 @@ fn loop_interactive_prompt() {
     loop {
         match interactive_prompt() {
             Ok(_) => {},
-            Err(_) => {
-                eprintln!("An error occurred. Please try again.");
+            Err(e) => {
+                eprintln!("{}", e);
             },
         }
     }
 }
 
-fn interactive_prompt() -> Result<(), ()> {
+fn interactive_prompt() -> Result<(), String> {
     println!("Please enter a temperature in Fahrenheit to convert to Celsius:");
     let mut input = String::new();
     io::stdin().read_line(&mut input).expect("Failed to read line");
@@ -53,8 +53,7 @@ fn interactive_prompt() -> Result<(), ()> {
             Ok(())
         },
         Err(_) => {
-            eprintln!("Invalid number provided: {}", input.trim());
-            return Err(());
+            return Err(format!("Invalid number provided: {}", input.trim()));
         }
     }
 }
