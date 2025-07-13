@@ -33,7 +33,9 @@ fn process_command_line_arg(arg: String) {
 fn loop_interactive_prompt() {
     loop {
         match interactive_prompt() {
-            Ok(_) => {},
+            Ok(_) => {
+                break
+            },
             Err(e) => {
                 eprintln!("{}", e);
             },
@@ -53,7 +55,7 @@ fn interactive_prompt() -> Result<(), String> {
             Ok(())
         },
         Err(_) => {
-            return Err(format!("Invalid number provided: {}", input.trim()));
+            return Err(format!("Invalid number provided: {}", input.trim()))
         }
     }
 }
