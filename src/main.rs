@@ -30,30 +30,31 @@ fn process_command_line_args(args: Vec<String>) {
 
 fn loop_interractive_prompt() {
     loop {
-        let done = interactive_prompt();
-        if done {
-            break;
+        match interactive_prompt() {
+            Ok(_) => {},
+            Err(_) => {
+                eprintln!("An error occurred. Please try again.");
+            },
         }
     }
 }
 
-fn interactive_prompt() -> bool {
+fn interactive_prompt() -> Result<(), ()> {
     println!("Please enter a temperature in Fahrenheit to convert to Celsius:");
-    let mut fahrenheit = String::new();
-    io::stdin().read_line(&mut fahrenheit).expect("Failed to read line");
+    let mut input = String::new();
+    io::stdin().read_line(&mut input).expect("Failed to read line");
 
-    let fahrenheit: f32 = match fahrenheit.trim().parse() {
-        Ok(num) => num,
-        Err(_) => {
-            eprintln!("Invalid number provided: {}", fahrenheit.trim());
-            return false;
+    match input.trim().parse() {
+        Ok(fahrenheit) => {
+            let celsius = fahrenheit_to_celsius(fahrenheit);
+            println!("{}", celsius);
+            Ok(())
         },
-    };
-
-    let celsius = fahrenheit_to_celsius(fahrenheit);
-    println!("{}", celsius);
-
-    true
+        Err(_) => {
+            eprintln!("Invalid number provided: {}", input.trim());
+            return Err(());
+        }
+    }
 }
 
 fn print_help() {
