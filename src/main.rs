@@ -17,17 +17,17 @@ fn process_command_line_arg(arg: String) {
         return;
     }
 
-    let fahrenheit: f32 = match arg.parse() {
-        Ok(num) => num,
+    match arg.parse() {
+        Ok(fahrenheit) => {
+            let celsius = fahrenheit_to_celsius(fahrenheit);
+            println!("{}", celsius);
+        }
         Err(_) => {
             eprintln!("Invalid number provided: {}", arg);
             print_help();
             return;
-        },
-    };
-
-    let celsius = fahrenheit_to_celsius(fahrenheit);
-    println!("{}", celsius);
+        }
+    }
 }
 
 fn loop_interractive_prompt() {
