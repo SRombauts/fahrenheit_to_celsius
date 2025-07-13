@@ -79,6 +79,26 @@ mod tests {
     use super::*;
 
     #[test]
+    fn test_process_command_line_arg_help() {
+        let result = process_command_line_arg("--help".to_string());
+        assert!(result.is_err());
+        assert_eq!(result.unwrap_err(), "Help requested. Use --help or -h to see usage.");
+    }
+
+    #[test]
+    fn test_process_command_line_arg_invalid_number() {
+        let result = process_command_line_arg("abc".to_string());
+        assert!(result.is_err());
+        assert_eq!(result.unwrap_err(), "Invalid number provided: abc");
+    }
+
+    #[test]
+    fn test_process_command_line_arg_valid_number() {
+        let result = process_command_line_arg("212.0".to_string());
+        assert!(result.is_ok());
+    }
+
+    #[test]
     fn test_freezing_temperature() {
         assert_eq!(fahrenheit_to_celsius(32.0), 0.0);
     }
