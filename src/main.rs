@@ -3,7 +3,13 @@ use std::io;
 fn main() {
     match std::env::args().nth(1) {
         Some(arg) => {
-            process_command_line_arg(arg);
+            match process_command_line_arg(arg) {
+                Ok(_) => {},
+                Err(e) => {
+                    eprintln!("{}", e);
+                    print_help();
+                }
+            }
         }
         None => {
             loop_interactive_prompt();
@@ -11,21 +17,19 @@ fn main() {
     }
 }
 
-fn process_command_line_arg(arg: String) {
+fn process_command_line_arg(arg: String) -> Result<(), String> {
     if arg == "--help" || arg == "-h" {
-        print_help();
-        return;
+        return Err("Help requested. Use --help or -h to see usage.".to_string());
     }
 
     match arg.parse() {
         Ok(fahrenheit) => {
             let celsius = fahrenheit_to_celsius(fahrenheit);
             println!("{}", celsius);
+            Ok(())
         }
         Err(_) => {
-            eprintln!("Invalid number provided: {}", arg);
-            print_help();
-            return;
+            Err(format!("Invalid number provided: {}", arg.trim()))
         }
     }
 }
