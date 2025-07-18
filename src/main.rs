@@ -9,7 +9,7 @@ fn main() {
                 print_help();
             }
         }
-        None => loop_interactive_prompt()
+        None => loop_interactive_prompt(),
     }
 }
 
@@ -19,7 +19,7 @@ fn process_command_line_arg(arg: &str) -> Result<(), String> {
             println!("{}", fahrenheit_to_celsius(fahrenheit));
             Ok(())
         }
-        Err(_) => Err(format!("Invalid argument: {}", arg.trim()))
+        Err(_) => Err(format!("Invalid argument: {}", arg.trim())),
     }
 }
 
@@ -27,7 +27,7 @@ fn loop_interactive_prompt() {
     loop {
         match interactive_prompt() {
             Ok(_) => break,
-            Err(e) => eprintln!("{e}")
+            Err(e) => eprintln!("{e}"),
         }
     }
 }
@@ -35,16 +35,16 @@ fn loop_interactive_prompt() {
 fn interactive_prompt() -> Result<(), String> {
     println!("Please enter a temperature in Fahrenheit to convert to Celsius:");
     let mut input = String::new();
-    io::stdin().read_line(&mut input).expect("Failed to read line");
+    io::stdin()
+        .read_line(&mut input)
+        .expect("Failed to read line");
 
     match input.trim().parse::<f32>() {
         Ok(fahrenheit) => {
             println!("{}", fahrenheit_to_celsius(fahrenheit));
             Ok(())
-        },
-        Err(_) => {
-            return Err(format!("Invalid argument: {}", input.trim()))
         }
+        Err(_) => return Err(format!("Invalid argument: {}", input.trim())),
     }
 }
 
